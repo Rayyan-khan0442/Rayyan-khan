@@ -8,7 +8,7 @@ int main() {
     cin >> N;
 
     vector<int> nums;
-    cout << "Enter " << N << " integers:";
+    cout << "Enter " << N << " integers:\n";
     for (int i = 0; i < N; i++) {
         int x;
         cin >> x;

@@ -1,0 +1,29 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main() {
+    int N;
+    cout << "Enter size of first array: ";
+    cin >> N;
+
+    vector<int> arr1(N), arr2(N-1);
+    cout << "Enter elements of first array:\n";
+    for (int i = 0; i < N; i++)
+        cin >> arr1[i];
+
+    cout << "Enter elements of second array:\n";
+    for (int i = 0; i < N-1; i++)
+        cin >> arr2[i];
+
+    int sum1 = 0, sum2 = 0;
+    for (int i = 0; i < N; i++)
+        sum1 += arr1[i];
+    for (int i = 0; i < N-1; i++)
+        sum2 += arr2[i];
+
+    int missing = sum1 - sum2;
+    cout << "Missing element: " << missing << endl;
+
+    return 0;
+}
