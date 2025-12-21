@@ -1,0 +1,132 @@
+#include <iostream>
+using namespace std;
+
+const int N = 10;
+
+void initialize(int bus[N][N])
+{
+    for (int i = 0; i < N; i++)
+        for (int j = 0; j < N; j++)
+            bus[i][j] = 0;
+}
+
+void displaySeats(int bus[N][N])
+{
+    cout << endl;
+    for (int i = 0; i < N; i++)
+    {
+        cout << "Row " << i + 1 << ": ";
+        for (int j = 0; j < N; j++)
+        {
+            cout << bus[i][j] << " ";
+        }
+        cout << endl;
+    }
+}
+
+void reserveSeat(int bus[N][N])
+{
+    int r, c;
+    cout << "Enter row and seat: ";
+    cin >> r >> c;
+
+    if (r < 1 || r > N || c < 1 || c > N)
+    {
+        cout << "Invalid seat." << endl;
+        return;
+    }
+
+    if (bus[r - 1][c - 1] == 1)
+    {
+        cout << "Seat already reserved." << endl;
+    }
+    else
+    {
+        bus[r - 1][c - 1] = 1;
+        cout << "Seat reserved." << endl;
+    }
+}
+
+void cancelSeat(int bus[N][N])
+{
+    int r, c;
+    cout << "Enter row and seat to cancel: ";
+    cin >> r >> c;
+
+    if (r < 1 || r > N || c < 1 || c > N)
+    {
+        cout << "Invalid seat." << endl;
+        return;
+    }
+
+    if (bus[r - 1][c - 1] == 0)
+    {
+        cout << "Seat already empty." << endl;
+    }
+    else
+    {
+        bus[r - 1][c - 1] = 0;
+        cout << "Reservation canceled." << endl;
+    }
+}
+
+void countRows(int bus[N][N])
+{
+    int empty = 0, full = 0, partial = 0;
+
+    for (int i = 0; i < N; i++)
+    {
+        int count = 0;
+        for (int j = 0; j < N; j++)
+        {
+            if (bus[i][j] == 1)
+                count++;
+        }
+
+        if (count == 0)
+            empty++;
+        else if (count == N)
+            full++;
+        else
+            partial++;
+    }
+
+    cout << endl;
+    cout << "Empty rows: " << empty << endl;
+    cout << "Fully occupied rows: " << full << endl;
+    cout << "Partially occupied rows: " << partial << endl;
+}
+
+int main()
+{
+    int seats[N][N];
+    initialize(seats);
+
+    int choice;
+    do
+    {
+        cout << "\n1. Display seats\n";
+        cout << "2. Reserve seat\n";
+        cout << "3. Cancel seat\n";
+        cout << "4. Count rows\n";
+        cout << "0. Exit\n";
+        cout << "Enter choice: ";
+        cin >> choice;
+
+        if (choice == 1)
+            displaySeats(seats);
+        else if (choice == 2)
+            reserveSeat(seats);
+        else if (choice == 3)
+            cancelSeat(seats);
+        else if (choice == 4)
+            countRows(seats);
+        else if (choice == 0)
+            cout << "Exiting program." << endl;
+        else
+            cout << "Invalid choice." << endl;
+
+    } while (choice != 0);
+
+    return 0;
+}

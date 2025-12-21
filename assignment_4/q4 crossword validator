@@ -1,0 +1,133 @@
+#include <iostream>
+using namespace std;
+
+const int LIM = 50;
+
+void readGrid(char grid[LIM][LIM], int r, int c)
+{
+    for (int i = 0; i < r; i++)
+        for (int j = 0; j < c; j++)
+            cin >> grid[i][j];
+}
+
+int horizontalCount(char grid[LIM][LIM], int r, int c)
+{
+    int total = 0;
+
+    for (int i = 0; i < r; i++)
+    {
+        int size = 0;
+        for (int j = 0; j <= c; j++)
+        {
+            if (j < c && grid[i][j] != '#')
+                size++;
+            else
+            {
+                if (size >= 3)
+                    total++;
+                size = 0;
+            }
+        }
+    }
+    return total;
+}
+
+int verticalCount(char grid[LIM][LIM], int r, int c)
+{
+    int total = 0;
+
+    for (int j = 0; j < c; j++)
+    {
+        int size = 0;
+        for (int i = 0; i <= r; i++)
+        {
+            if (i < r && grid[i][j] != '#')
+                size++;
+            else
+            {
+                if (size >= 3)
+                    total++;
+                size = 0;
+            }
+        }
+    }
+    return total;
+}
+
+void longestWord(char grid[LIM][LIM], int r, int c, char result[LIM], int &len)
+{
+    len = 0;
+    char temp[LIM];
+
+    for (int i = 0; i < r; i++)
+    {
+        int k = 0;
+        for (int j = 0; j <= c; j++)
+        {
+            if (j < c && grid[i][j] != '#')
+                temp[k++] = grid[i][j];
+            else
+            {
+                if (k >= 3 && k > len)
+                {
+                    len = k;
+                    for (int x = 0; x < k; x++)
+                        result[x] = temp[x];
+                }
+                k = 0;
+            }
+        }
+    }
+
+    for (int j = 0; j < c; j++)
+    {
+        int k = 0;
+        for (int i = 0; i <= r; i++)
+        {
+            if (i < r && grid[i][j] != '#')
+                temp[k++] = grid[i][j];
+            else
+            {
+                if (k >= 3 && k > len)
+                {
+                    len = k;
+                    for (int x = 0; x < k; x++)
+                        result[x] = temp[x];
+                }
+                k = 0;
+            }
+        }
+    }
+}
+
+int main()
+{
+    char puzzle[LIM][LIM];
+    char word[LIM];
+    int rows, cols, length;
+
+    cout << "Enter rows and columns: ";
+    cin >> rows >> cols;
+
+    readGrid(puzzle, rows, cols);
+
+    cout << "Horizontal words: "
+         << horizontalCount(puzzle, rows, cols) << endl;
+
+    cout << "Vertical words: "
+         << verticalCount(puzzle, rows, cols) << endl;
+
+    longestWord(puzzle, rows, cols, word, length);
+
+    if (length > 0)
+    {
+        cout << "Longest word: ";
+        for (int i = 0; i < length; i++)
+            cout << word[i];
+        cout << endl;
+    }
+    else
+        cout << "No valid word found" << endl;
+
+    return 0;
+}

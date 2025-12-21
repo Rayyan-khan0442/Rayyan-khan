@@ -1,0 +1,104 @@
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+float temps[7][4];
+
+
+void enterTemps()
+{
+    for (int day = 0; day < 7; day++)
+    {
+        cout << "Enter temperatures for Day " << day + 1 << endl;
+        for (int slot = 0; slot < 4; slot++)
+        {
+            cout << "Reading " << slot + 1 << ": ";
+            cin >> temps[day][slot];
+        }
+        cout << endl;
+    }
+}
+
+
+float findMax(float arr[7][4])
+{
+    float maxTemp = arr[0][0];
+    for (int i = 0; i < 7; i++)
+    {
+        for (int j = 0; j < 4; j++)
+        {
+            if (arr[i][j] > maxTemp)
+                maxTemp = arr[i][j];
+        }
+    }
+    return maxTemp;
+}
+
+float findMin(float arr[7][4])
+{
+    float minTemp = arr[0][0];
+    for (int i = 0; i < 7; i++)
+    {
+        for (int j = 0; j < 4; j++)
+        {
+            if (arr[i][j] < minTemp)
+                minTemp = arr[i][j];
+        }
+    }
+    return minTemp;
+}
+
+
+float dailyAverage(float arr[7][4], int dayIndex)
+{
+    float total = 0;
+    for (int i = 0; i < 4; i++)
+    {
+        total += arr[dayIndex][i];
+    }
+    return total / 4;
+}
+
+
+void showReport(float arr[7][4], float averages[7], float maxT, float minT)
+{
+    cout << "Weekly Temperature Analysis";
+    cout << setw(10) << "Day"
+         << setw(10) << "T1"
+         << setw(10) << "T2"
+         << setw(10) << "T3"
+         << setw(10) << "T4"
+         << setw(15) << "Average" << endl;
+
+    for (int i = 0; i < 7; i++)
+    {
+        cout << setw(10) << i + 1;
+        for (int j = 0; j < 4; j++)
+        {
+            cout << setw(10) << arr[i][j];
+        }
+        cout << setw(15) << averages[i] << endl;
+    }
+
+    cout << "Highest Temperature of the Week: " << maxT << endl;
+    cout << "Lowest Temperature of the Week: " << minT << endl;
+}
+
+int main()
+{
+    float avgPerDay[7];
+
+    enterTemps();
+
+    for (int i = 0; i < 7; i++)
+    {
+        avgPerDay[i] = dailyAverage(temps, i);
+    }
+
+    float highest = findMax(temps);
+    float lowest = findMin(temps);
+
+    showReport(temps, avgPerDay, highest, lowest);
+
+    return 0;
+}

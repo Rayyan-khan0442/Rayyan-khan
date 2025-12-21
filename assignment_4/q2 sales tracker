@@ -1,0 +1,90 @@
+#include <iostream>
+using namespace std;
+
+int sales[7][5];
+
+void inputSales()
+{
+    for (int i = 0; i < 7; i++)
+    {
+        cout << "Day " << i + 1 << endl;
+        for (int j = 0; j < 5; j++)
+        {
+            cout << "Product " << j + 1 << ": ";
+            cin >> sales[i][j];
+        }
+        cout << endl;
+    }
+}
+
+void calculateRevenue(int total[5])
+{
+    for (int j = 0; j < 5; j++)
+    {
+        total[j] = 0;
+        for (int i = 0; i < 7; i++)
+        {
+            total[j] = total[j] + sales[i][j];
+        }
+    }
+}
+
+int findMaxProduct(int total[5])
+{
+    int max = total[0];
+    int index = 0;
+
+    for (int i = 1; i < 5; i++)
+    {
+        if (total[i] > max)
+        {
+            max = total[i];
+            index = i;
+        }
+    }
+    return index;
+}
+
+int findBestDay()
+{
+    int bestDay = 0;
+    int highest = 0;
+
+    for (int i = 0; i < 7; i++)
+    {
+        int sum = 0;
+        for (int j = 0; j < 5; j++)
+        {
+            sum = sum + sales[i][j];
+        }
+
+        if (sum > highest)
+        {
+            highest = sum;
+            bestDay = i;
+        }
+    }
+    return bestDay;
+}
+
+int main()
+{
+    int weeklyTotal[5];
+
+    inputSales();
+    calculateRevenue(weeklyTotal);
+
+    int maxProduct = findMaxProduct(weeklyTotal);
+    int bestDay = findBestDay();
+
+    cout << "Weekly sales of products:" << endl;
+    for (int i = 0; i < 5; i++)
+    {
+        cout << "Product " << i + 1 << ": " << weeklyTotal[i] << endl;
+    }
+
+    cout << "Highest selling product: Product " << maxProduct + 1 << endl;
+    cout << "Best sales day: Day " << bestDay + 1 << endl;
+
+    return 0;
+}

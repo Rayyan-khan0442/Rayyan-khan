@@ -1,0 +1,31 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main() {
+    int N;
+    cout << "Enter number of elements: ";
+    cin >> N;
+
+    vector<int> nums;
+    cout << "Enter " << N << " integers:";
+    for (int i = 0; i < N; i++) {
+        int x;
+        cin >> x;
+        nums.push_back(x);
+    }
+
+    int maxVal = nums[0];
+    int minVal = nums[0];
+    for (int i = 1; i < nums.size(); i++) {
+        if (nums[i] > maxVal)
+            maxVal = nums[i];
+        if (nums[i] < minVal)
+            minVal = nums[i];
+    }
+
+    cout << "Maximum: " << maxVal << endl;
+    cout << "Minimum: " << minVal << endl;
+
+    return 0;
+}

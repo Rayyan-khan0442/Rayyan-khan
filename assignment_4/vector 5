@@ -1,0 +1,31 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main() {
+    int N;
+    cout << "Enter number of elements: ";
+    cin >> N;
+
+    vector<int> nums;
+    cout << "Enter " << N << " integers:\n";
+    for (int i = 0; i < N; i++) {
+        int x;
+        cin >> x;
+        nums.push_back(x);
+    }
+
+    int target;
+    cout << "Enter number to count: ";
+    cin >> target;
+
+    int count = 0;
+    for (int i = 0; i < nums.size(); i++) {
+        if (nums[i] == target)
+            count++;
+    }
+
+    cout << "The number " << target << " appears " << count << " times.\n";
+
+    return 0;
+}
