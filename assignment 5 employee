@@ -1,0 +1,67 @@
+#include <iostream>
+#include <vector>
+#include <fstream>
+#include <string>
+using namespace std;
+struct employee
+{
+    int id;
+    string name;
+    int salary;
+};
+int main()
+{
+    vector<employee> employeeData;
+    int empNo, monthlySalary;
+    cout << "How many Employee's Data you want to add: ";
+    cin >> empNo;
+    for (int i = 0; i < empNo; i++)
+    {
+        employee emp;
+        cout << "Employee " << i + 1 << ": "<<endl;
+        cout << "ID: ";
+        cin >> emp.id;
+        cout << "Name: ";
+        cin.ignore();
+        getline(cin, emp.name);
+        cout << "Salary: ";
+        cin >> monthlySalary;
+        emp.salary = monthlySalary * 12;
+        employeeData.push_back(emp);
+    }
+    ofstream highSalary("high_salary.txt");
+    if (!(highSalary.is_open()))
+    {
+        cerr << "Error: Unable to open the file (high_salary.txt)";
+        return 0;
+    }
+    else
+    {
+        for (employee emp : employeeData)
+        {
+            if (emp.salary >= 1500000)
+            {
+                highSalary << emp.id << " " << emp.name << " " << emp.salary<<endl;
+            }
+        }
+    }
+    highSalary.close();
+    ifstream readHighSalary("high_salary.txt");
+    if (!readHighSalary.is_open())
+    {
+        cerr << "Error: Unable to open the file (high_salary.txt)";
+        return 2;
+    }
+    else
+    {
+        string data;
+        cout << "Employees' Information with salary >= 1500000: " << endl;
+        while (getline(readHighSalary, data))
+        {
+            cout << data << endl;
+        }
+    }
+    readHighSalary.close();
+
+    return 0;
+}
